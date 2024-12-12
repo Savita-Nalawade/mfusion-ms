@@ -92,7 +92,7 @@ pipeline {
             }
             steps {
                 script {
-                    def devImage = "Savita-Nalawade/mfusion-ms:mfusion-ms-v.1.${env.BUILD_NUMBER}"
+                    def devImage = "savitanalawade/mfusion-ms:mfusion-ms-v.1.${env.BUILD_NUMBER}"
                     def preprodImage = "${ECR_URL}/mfusion-ms:preprod-mfusion-ms-v.1.${env.BUILD_NUMBER}"
                     def prodImage = "${ECR_URL}/mfusion-ms:prod-mfusion-ms-v.1.${env.BUILD_NUMBER}"
 
@@ -133,6 +133,10 @@ pipeline {
                     echo "Deploying to Dev Environment"
                     def yamlFiles = ['00-ingress.yaml', '02-service.yaml', '03-service-account.yaml', '05-deployment.yaml', '06-configmap.yaml', '09.hpa.yaml']
                     def yamlDir = 'kubernetes/dev/'
+
+					// Debugging: Checking if the file exists
+                    echo "Listing files in the kubernetes/dev/ directory"
+                    sh "ls -l ${yamlDir}
 
                     // Replace <latest> in dev environment only
                     sh "sed -i 's/<latest>/mfusion-ms-v.1.${BUILD_NUMBER}/g' ${yamlDir}05-deployment.yaml"
