@@ -92,7 +92,7 @@ pipeline {
             }
             steps {
                 script {
-                    def devImage = "Savita-Nalawade/mfusion-ms:mfusion-ms-v.1.${env.BUILD_NUMBER}"
+                    def devImage = "savitanalawade/mfusion-ms:mfusion-ms-v.1.${env.BUILD_NUMBER}"
                     def preprodImage = "${ECR_URL}/mfusion-ms:preprod-mfusion-ms-v.1.${env.BUILD_NUMBER}"
                     def prodImage = "${ECR_URL}/mfusion-ms:prod-mfusion-ms-v.1.${env.BUILD_NUMBER}"
 
