@@ -134,15 +134,6 @@ pipeline {
                     def yamlFiles = ['00-ingress.yaml', '02-service.yaml', '03-service-account.yaml', '05-deployment.yaml', '06-configmap.yaml', '09.hpa.yaml']
                     def yamlDir = 'kubernetes/dev/'
 
-					// Check if the directory exists before continuing
-                                sh """
-                                    if [ -d "${yamlDir}" ]; then
-                                        echo "Directory ${yamlDir} exists."
-                                    else
-                                        echo "Directory ${yamlDir} does not exist. Exiting..."
-                                        exit 1
-                                    fi
-                                """
 
                     // Replace <latest> in dev environment only
                     sh "sed -i 's/<latest>/mfusion-ms-v.1.${BUILD_NUMBER}/g' ${yamlDir}05-deployment.yaml"
