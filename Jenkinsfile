@@ -136,7 +136,7 @@ pipeline {
 
 					// Debugging: Checking if the file exists
                     echo "Listing files in the kubernetes/dev/ directory"
-                    sh "ls -l ${yamlDir}
+                    sh "ls -l ${yamlDir}"
 
                     // Replace <latest> in dev environment only
                     sh "sed -i 's/<latest>/mfusion-ms-v.1.${BUILD_NUMBER}/g' ${yamlDir}05-deployment.yaml"
