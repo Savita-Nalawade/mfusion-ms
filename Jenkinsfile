@@ -110,7 +110,7 @@ pipeline {
             steps {
                 script {
                     echo "Deploying to Dev Environment"
-                    def yamlFile = 'kubernetes/dev/05-deployment.yaml'
+                    def yamlFile = 'Kubernetes/dev/05-deployment.yaml'
 
                     sh """
                         sed -i 's|<latest>|${DEV_IMAGE_TAG}|g' ${yamlFile}
