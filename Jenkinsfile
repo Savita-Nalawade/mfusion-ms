@@ -110,17 +110,17 @@ pipeline {
             steps {
                 script {
                     echo "Deploying to Dev Environment"
-                    def yamlFile = 'Kubernetes/dev/05-deployment.yaml'
+                    def yamlFile = 'kubernetes/dev/05-deployment.yaml'
 
                     sh """
                         sed -i 's|<latest>|${DEV_IMAGE_TAG}|g' ${yamlFile}
                         cat ${yamlFile} | grep ${DEV_IMAGE_TAG} || echo "Replacement failed in ${yamlFile}"
                     """
                     sh """
-                        kubectl --kubeconfig=/var/lib/jenkins/.kube/config apply -f Kubernetes/dev/
+                        kubectl --kubeconfig=/var/lib/jenkins/.kube/config apply -f kubernetes/dev/
                     """
 
-                    def configMapChanged = sh(script: "git diff --name-only HEAD~1 | grep -q 'Kubernetes/dev/06-configmap.yaml'", returnStatus: true)
+                    def configMapChanged = sh(script: "git diff --name-only HEAD~1 | grep -q 'kubernetes/dev/06-configmap.yaml'", returnStatus: true)
                     if (configMapChanged == 0) {
                         echo "ConfigMap changed, restarting pods"
                         sh """
@@ -140,14 +140,14 @@ pipeline {
             steps {
                 script {
                     echo "Deploying to Preprod Environment"
-                    def yamlFile = 'Kubernetes/preprod/05-deployment.yaml'
+                    def yamlFile = 'kubernetes/preprod/05-deployment.yaml'
 
                     sh """
                         sed -i 's|<latest>|${PREPROD_IMAGE_TAG}|g' ${yamlFile}
                         cat ${yamlFile} | grep ${PREPROD_IMAGE_TAG} || echo "Replacement failed in ${yamlFile}"
                     """
                     sh """
-                        kubectl --kubeconfig=/var/lib/jenkins/.kube/config apply -f Kubernetes/preprod/
+                        kubectl --kubeconfig=/var/lib/jenkins/.kube/config apply -f kubernetes/preprod/
                     """
                 }
             }
@@ -160,14 +160,14 @@ pipeline {
             steps {
                 script {
                     echo "Deploying to Prod Environment"
-                    def yamlFile = 'Kubernetes/prod/05-deployment.yaml'
+                    def yamlFile = 'kubernetes/prod/05-deployment.yaml'
 
                     sh """
                         sed -i 's|<latest>|prod-mfusion-ms-v.1.${BUILD_NUMBER}|g' ${yamlFile}
                         cat ${yamlFile} | grep prod-mfusion-ms-v.1.${BUILD_NUMBER} || echo "Replacement failed in ${yamlFile}"
                     """
                     sh """
-                        kubectl --kubeconfig=/var/lib/jenkins/.kube/config apply -f Kubernetes/prod/
+                        kubectl --kubeconfig=/var/lib/jenkins/.kube/config apply -f kubernetes/prod/
                     """
                 }
             }
