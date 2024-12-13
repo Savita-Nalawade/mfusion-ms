@@ -12,11 +12,10 @@ pipeline {
         IMAGE_TAG = "${BRANCH_NAME}-mfusion-ms-v.1.${BUILD_NUMBER}"
         DEV_IMAGE_TAG = "dev-mfusion-ms-v.1.${BUILD_NUMBER}"
         PREPROD_IMAGE_TAG = "preprod-mfusion-ms-v.1.${BUILD_NUMBER}"
-
     }
 
     options {
-        buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr: '3'))
+        buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
     }
 
     tools {
